@@ -1,0 +1,64 @@
+<#assign myParentDir="entity">
+<#assign className = table.className>
+<#assign classNameLower = className?lower_case>
+<#assign rootPagefloder = basepackage?substring(basepackage?last_index_of(".")+1)>
+<#assign clasNameWithoutPrefix = classNameLower?replace(rootPagefloder,'')>
+
+<div   class="app-row title">
+	<div class="app-h2">
+		<span >${table.tableAlias}{{ data.${table.pkColumn.camelName}>0?'修改':'添加'}}</span>
+	</div>
+</div>
+	<div class="app-row">
+		<div class="alert alert-danger alert-dismissible" ng-show="haserror" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+					aria-hidden="true">&times;</span></button>
+			<strong>错误!</strong> {{msg}}
+		</div>
+		<form  ng-submit="validAndUpdate(frm.$valid)"  name="frm" class="form-horizontal" method="post" novalidate>
+			<#list table.pkColumns as column>
+				<input type="hidden" ng-model="data.${column.camelName}" />
+			</#list>
+				<#list table.columns as column><#if !column.isPk()>
+					<div class="form-group">
+						<label class="control-label col-sm-3">${column.columnAlias}：</label>
+						<div class="col-sm-6">
+							<#if (column.simpleJavaType =="Timestamp" || column.simpleJavaType =="Date")>
+								<input type="text" class="form-control"
+									   placeholder="请输入${column.columnAlias}"
+									   name="${column.camelName}"   ng-model="data.${column.camelName}"/>
+							<#elseif (column.simpleJavaType =="Integer" || column.simpleJavaType =="Long" || column.simpleJavaType =="Short") >
+								<input type="number" class="form-control"
+									   placeholder="请输入${column.columnAlias}"  name="${column.camelName}"  ng-model="data.${column.camelName}">
+							<#elseif (column.simpleJavaType =="BigDecimal" || column.simpleJavaType =="Double" || column.simpleJavaType =="Float") >
+								<input type="text"  class="form-control"
+									   placeholder="请输入${column.columnAlias}"
+									   name="${column.camelName}"   ng-model="data.${column.camelName}"
+									   ng-pattern="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/">
+							<#elseif (column.simpleJavaType =="Boolean" ) >
+								<select class="form-control"   name="${column.camelName}"  ng-model="data.${column.camelName}"
+										ng-options="item.id as item.name for item in [{id:true,name:'是'},{id:false,name:'否'}]" >
+								</select>
+							<#else>
+								<input type="text" class="form-control"
+									   placeholder="请输入${column.columnAlias}" ng-maxlength="255"
+									   name="${column.camelName}" ng-model="data.${column.camelName}"/>
+							</#if>
+						</div>
+						<div class="col-sm-3">
+							<p ng-show="!frm.${column.camelName}.$valid" class="ng-error-info">${column.columnAlias}无效。</p>
+						</div>
+					</div>
+				</#if></#list>
+				<div class="form-group">
+					<label class="control-label col-sm-3">&nbsp;</label>
+					<div class="col-sm-6">
+						<button  ng-show="submitting" type="button" class="btn btn-default  w-120px">正在保存...</button>
+						<button ng-show="!submitting"  type="submit" class="btn btn-primary  w-120px">保存</button>
+						<a  ui-sref="${ngrout}.${rootPagefloder}.${clasNameWithoutPrefix?lower_case}.list" class="btn btn-default w-120px">返回</a>
+					</div>
+					<div class="col-sm-3">
+					</div>
+				</div>
+		</form>
+	</div>

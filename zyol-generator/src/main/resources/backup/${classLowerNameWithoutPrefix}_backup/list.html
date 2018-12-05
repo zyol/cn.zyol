@@ -1,0 +1,70 @@
+﻿<#assign myParentDir="entity">
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+<#assign classNameLowerFull = className?lower_case>
+<#assign rootPagefloder = basepackage?substring(basepackage?last_index_of(".")+1)>
+<#assign clasNameWithoutPrefix = classNameLowerFull?replace(rootPagefloder,'')>
+
+	<div class="app-row title">
+		<div class="app-h2">
+			<span>${table.tableAlias}管理 </span>
+			<div class="pull-right">
+				<a ui-sref="${ngrout}.${rootPagefloder}.${clasNameWithoutPrefix?lower_case}.update({id:0})" class="btn app-btn-virtual" >
+					<span class="am-bottom-button-add">+</span>添加</a>
+			</div>
+		</div>
+	</div>
+	<div class="app-row">
+		<div id="search" class="boot-panel panel-default panel-search">
+			<form  ng-submit="search()" class="form-horizontal" method="post">
+				<table class="table ">
+					<tr>
+						<th class="w-80px">
+							关键字：
+						</th>
+						<td class="w-300px">
+							<input type="text"  ng-model="searchParams.keywords"  placeholder="关键字" class="form-control">
+						</td>
+						<td>
+							<input name="serachlist" type="submit" class="btn btn-primary" accesskey="S" value="查 询(S)" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div id="dvPagers">
+			<table class="table table-bordered table-hover app-table-list ">
+				<thead>
+				<tr>
+					<th class="w-60px">
+						序号
+					</th>
+					<#list table.columns as column><#if !column.isPk()>
+						<th >${column.columnAlias}</th>
+					</#if></#list>
+					<th class="w-120px">
+						操作
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="item in pageInfo.list" data-pkey="{{item.id}}">
+					<td>{{$index + (pageInfo.pageIndex-1)*pageInfo.pageSize+1 }}</td>
+					<#list table.columns as column><#if !column.isPk()>
+						<#if (column.simpleJavaType =="Timestamp" || column.simpleJavaType =="Date")>
+							<td >{{  item.${column.camelName} | date:'yyyy-MM-dd'}}</td>
+							<#else>
+								<td>{{ item.${column.camelName} }}</td>
+						</#if>
+					</#if></#list>
+					<td class="w-120px">
+						<a  ui-sref="${ngrout}.${rootPagefloder}.${clasNameWithoutPrefix?lower_case}.update({id:item.id})">编辑</a>
+						<a  href="javascript:void(0)" ng-click="delete(item.id)">删除</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- 底部分页 -->
+			<span data-ng-include=" 'src/tpl/pageInfo.html' "></span>
+		</div>
+	</div>

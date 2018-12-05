@@ -11,6 +11,7 @@
     <modules>
         <module>zyol-basic</module>
         <module>zyol-sso</module>
+        <module>zyol-generator</module>
     </modules>
 
     <!-- Spring Boot 启动父依赖 -->
