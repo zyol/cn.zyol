@@ -11,5 +11,12 @@
 
     <artifactId>zyol-basic</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>cn.zyol</groupId>
+            <artifactId>zyol-sso-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
     <packaging>jar</packaging>
 </project>
