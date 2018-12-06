@@ -114,11 +114,11 @@ public class AntPathMatcher  {
 			if (!fullMatch) {
 				return true;
 			}
-			if (pattIdxStart == pattIdxEnd && pattDirs[pattIdxStart].equals("*") && path.endsWith(this.pathSeparator)) {
+			if (pattIdxStart == pattIdxEnd && "*".equals(pattDirs[pattIdxStart]) && path.endsWith(this.pathSeparator)) {
 				return true;
 			}
 			for (int i = pattIdxStart; i <= pattIdxEnd; i++) {
-				if (!pattDirs[i].equals("**")) {
+				if (!"**".equals(pattDirs[i])) {
 					return false;
 				}
 			}
@@ -136,7 +136,7 @@ public class AntPathMatcher  {
 		// up to last '**'
 		while (pattIdxStart <= pattIdxEnd && pathIdxStart <= pathIdxEnd) {
 			String patDir = pattDirs[pattIdxEnd];
-			if (patDir.equals("**")) {
+			if ("**".equals(patDir)) {
 				break;
 			}
 			if (!matchStrings(patDir, pathDirs[pathIdxEnd], uriTemplateVariables)) {
@@ -148,7 +148,7 @@ public class AntPathMatcher  {
 		if (pathIdxStart > pathIdxEnd) {
 			// String is exhausted
 			for (int i = pattIdxStart; i <= pattIdxEnd; i++) {
-				if (!pattDirs[i].equals("**")) {
+				if (!"**".equals(pattDirs[i])) {
 					return false;
 				}
 			}
@@ -158,7 +158,7 @@ public class AntPathMatcher  {
 		while (pattIdxStart != pattIdxEnd && pathIdxStart <= pathIdxEnd) {
 			int patIdxTmp = -1;
 			for (int i = pattIdxStart + 1; i <= pattIdxEnd; i++) {
-				if (pattDirs[i].equals("**")) {
+				if ("**".equals(pattDirs[i])) {
 					patIdxTmp = i;
 					break;
 				}
@@ -196,7 +196,7 @@ public class AntPathMatcher  {
 		}
 
 		for (int i = pattIdxStart; i <= pattIdxEnd; i++) {
-			if (!pattDirs[i].equals("**")) {
+			if (!"**".equals(pattDirs[i])) {
 				return false;
 			}
 		}
@@ -263,7 +263,9 @@ public class AntPathMatcher  {
 	public Map<String, String> extractUriTemplateVariables(String pattern, String path) {
 		Map<String, String> variables = new LinkedHashMap<String, String>();
 		boolean result = doMatch(pattern, path, true, variables);
-		if(!result) throw new IllegalStateException("Pattern \"" + pattern + "\" is not a match for \"" + path + "\"");
+		if(!result) {
+            throw new IllegalStateException("Pattern \"" + pattern + "\" is not a match for \"" + path + "\"");
+        }
 		return variables;
 	}
 
@@ -376,6 +378,7 @@ public class AntPathMatcher  {
 			this.path = path;
 		}
 
+		@Override
 		public int compare(String pattern1, String pattern2) {
 			if (pattern1 == null && pattern2 == null) {
 				return 0;

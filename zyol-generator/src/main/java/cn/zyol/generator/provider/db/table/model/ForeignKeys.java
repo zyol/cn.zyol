@@ -70,7 +70,9 @@ public class ForeignKeys  {
 		if (fkey != null) {
 			return (ForeignKey) fkey;
 		}
-		else return null;
+		else {
+            return null;
+        }
 	}
 	/**
 	 * @return Returns the parentTable.

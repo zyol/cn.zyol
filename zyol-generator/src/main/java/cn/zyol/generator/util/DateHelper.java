@@ -25,7 +25,9 @@ public class DateHelper {
     }
 
     public static boolean isDateType(Class<?> targetType) {
-        if(targetType == null) return false;
+        if(targetType == null) {
+            return false;
+        }
         return targetType == Date.class || targetType == java.sql.Timestamp.class || targetType == java.sql.Date.class || targetType == java.sql.Time.class;
     }
     

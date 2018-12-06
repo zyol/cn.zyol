@@ -86,7 +86,9 @@ public class GeneratorFacade {
 
         public static void clear() {
             Map m = context.get();
-            if (m != null) m.clear();
+            if (m != null) {
+                m.clear();
+            }
         }
 
         public static Map getContext() {
@@ -111,10 +113,11 @@ public class GeneratorFacade {
             Generator g = getGenerator(templateRootDir);
             GeneratorModel m = GeneratorModelUtils.newFromMap(params);
             try {
-                if (isDelete)
+                if (isDelete) {
                     g.deleteBy(m.templateModel, m.filePathModel);
-                else
+                } else {
                     g.generateBy(m.templateModel, m.filePathModel);
+                }
             } catch (GeneratorException ge) {
                 PrintUtils.printExceptionsSumary(ge.getMessage(), getGenerator(templateRootDir).getOutRootDir(), ge.getExceptions());
             }
@@ -140,10 +143,11 @@ public class GeneratorFacade {
             GeneratorModel m = GeneratorModelUtils.newFromClass(clazz);
             PrintUtils.printBeginProcess("JavaClass:" + clazz.getSimpleName(), isDelete);
             try {
-                if (isDelete)
+                if (isDelete) {
                     g.deleteBy(m.templateModel, m.filePathModel);
-                else
+                } else {
                     g.generateBy(m.templateModel, m.filePathModel);
+                }
             } catch (GeneratorException ge) {
                 PrintUtils.printExceptionsSumary(ge.getMessage(), getGenerator(templateRootDir).getOutRootDir(), ge.getExceptions());
             }
@@ -199,10 +203,11 @@ public class GeneratorFacade {
         public void processByTable(Generator g, Table table, boolean isDelete) throws Exception {
             GeneratorModel m = GeneratorModelUtils.newFromTable(table);
             PrintUtils.printBeginProcess(table.getSqlName() + " => " + table.getClassName(), isDelete);
-            if (isDelete)
+            if (isDelete) {
                 g.deleteBy(m.templateModel, m.filePathModel);
-            else
+            } else {
                 g.generateBy(m.templateModel, m.filePathModel);
+            }
         }
     }
 
@@ -290,7 +295,9 @@ public class GeneratorFacade {
                 for (int i = 0; i < exceptions.size(); i++) {
                     Exception e = exceptions.get(i);
                     System.err.println("[GENERATE ERROR]:" + e);
-                    if (i == 0) e.printStackTrace();
+                    if (i == 0) {
+                        e.printStackTrace();
+                    }
                     e.printStackTrace(output);
                 }
                 output.close();

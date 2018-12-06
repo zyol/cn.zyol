@@ -41,7 +41,9 @@ public class TableFactory {
     }
 
     public synchronized static TableFactory getInstance() {
-        if (instance == null) instance = new TableFactory();
+        if (instance == null) {
+            instance = new TableFactory();
+        }
         return instance;
     }
 
@@ -110,8 +112,9 @@ public class TableFactory {
     }
 
     private Table _getTable(String catalog, String schema, String tableName) throws SQLException {
-        if (tableName == null || tableName.trim().length() == 0)
+        if (tableName == null || tableName.trim().length() == 0) {
             throw new IllegalArgumentException("tableName must be not empty");
+        }
         catalog = StringHelper.defaultIfEmpty(catalog, null);
         schema = StringHelper.defaultIfEmpty(schema, null);
 
@@ -408,7 +411,7 @@ public class TableFactory {
             NodeData root = getTableConfigXmlNodeData(table.getSqlName());
             if (root != null) {
                 for (NodeData item : root.childs) {
-                    if (item.nodeName.equals("column")) {
+                    if ("column".equals(item.nodeName)) {
                         if (column.getSqlName().equalsIgnoreCase(item.attributes.get("sqlName"))) {
                             return item.attributes;
                         }
@@ -444,8 +447,12 @@ public class TableFactory {
     class DbHelper {
         public void close(ResultSet rs, PreparedStatement ps, Statement... statements) {
             try {
-                if (ps != null) ps.close();
-                if (rs != null) rs.close();
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
                 for (Statement s : statements) {
                     s.close();
                 }

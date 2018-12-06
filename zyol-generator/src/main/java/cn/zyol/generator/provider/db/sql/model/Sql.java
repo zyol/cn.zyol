@@ -69,8 +69,12 @@ public class Sql {
 	
 	public boolean isColumnsInSameTable() {
 		//  还要增加表的列数与columns是否相等,才可以为select 生成 include语句
-		if(columns == null || columns.isEmpty()) return false;
-		if(columns.size() == 1 && columns.iterator().next().getTable() != null) return true;
+		if(columns == null || columns.isEmpty()) {
+            return false;
+        }
+		if(columns.size() == 1 && columns.iterator().next().getTable() != null) {
+            return true;
+        }
 		String preTableName = columns.iterator().next().getSqlName();
 		for(Column c :columns) {
 			Table table = c.getTable();
@@ -96,14 +100,18 @@ public class Sql {
 	 * @return
 	 */
 	public String getResultClass() {
-		if(StringHelper.isNotBlank(resultClass)) return resultClass;
+		if(StringHelper.isNotBlank(resultClass)) {
+            return resultClass;
+        }
 		if(columns.size() == 1) {
 			return columns.iterator().next().getSimpleJavaType();
 		}
 		if(isColumnsInSameTable()) {
 			return columns.iterator().next().getTable().getClassName();
 		}else {
-			if(operation == null) return null;
+			if(operation == null) {
+                return null;
+            }
 			return StringHelper.makeAllWordFirstLetterUpperCase(StringHelper.toUnderscoreName(operation))+"Result";
 		}
 	}    
@@ -131,8 +139,12 @@ public class Sql {
 	 * <pre>
 	 */	
 	public String getParameterClass() {
-		if(StringHelper.isNotBlank(parameterClass)) return parameterClass;
-		if(StringHelper.isBlank(operation)) return null;
+		if(StringHelper.isNotBlank(parameterClass)) {
+            return parameterClass;
+        }
+		if(StringHelper.isBlank(operation)) {
+            return null;
+        }
 		if(isSelectSql()) {
 			return StringHelper.makeAllWordFirstLetterUpperCase(StringHelper.toUnderscoreName(operation))+"Query";
 		}else {
@@ -338,7 +350,9 @@ public class Sql {
 		for(Iterator<Column> it = columns.iterator();it.hasNext();) {
 			Column c = it.next();
 			sb.append(c.getSqlName());
-			if(it.hasNext()) sb.append(",");
+			if(it.hasNext()) {
+                sb.append(",");
+            }
 		}
 		return sb.toString();
 	}
@@ -418,7 +432,9 @@ public class Sql {
 	 * @return
 	 */
 	public String getTableClassName() {
-		if(StringHelper.isBlank(tableSqlName)) return null;
+		if(StringHelper.isBlank(tableSqlName)) {
+            return null;
+        }
 		String removedPrefixSqlName = Table.removeTableSqlNamePrefix(tableSqlName);
 		return StringHelper.makeAllWordFirstLetterUpperCase(StringHelper.toUnderscoreName(removedPrefixSqlName));
 	}
@@ -440,6 +456,7 @@ public class Sql {
 	    return c;
 	}
 	
+	@Override
 	public String toString() {
 		return "sourceSql:\n"+sourceSql+"\nsql:"+getSql();
 	}

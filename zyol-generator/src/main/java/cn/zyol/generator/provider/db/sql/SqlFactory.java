@@ -107,11 +107,15 @@ public class SqlFactory {
     public class SelectColumnsParser {
     
 		private LinkedHashSet<Column> convert2Columns(Sql sql,ResultSetMetaData metadata) throws SQLException, Exception {
-			if(metadata == null) return new LinkedHashSet();
+			if(metadata == null) {
+                return new LinkedHashSet();
+            }
 			LinkedHashSet<Column> columns = new LinkedHashSet();
 	        for(int i = 1; i <= metadata.getColumnCount(); i++) {
 	        	Column c = convert2Column(sql,metadata, i);
-	        	if(c == null) throw new IllegalStateException("column must be not null");
+	        	if(c == null) {
+                    throw new IllegalStateException("column must be not null");
+                }
 				columns.add(c);
 	        }
 			return columns;

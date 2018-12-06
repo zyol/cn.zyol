@@ -6,7 +6,9 @@ import cn.zyol.generator.util.typemapping.DatabaseDataTypesUtils;
 public class ColumnHelper {
 	
 	public static String[] removeHibernateValidatorSpecialTags(String str) {
-		if(str == null || str.trim().length() == 0) return new String[]{};
+		if(str == null || str.trim().length() == 0) {
+            return new String[]{};
+        }
 		return str.trim().replaceAll("@", "").replaceAll("\\(.*?\\)", "").trim().split("\\s+");
 	}
 	

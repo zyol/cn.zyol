@@ -89,10 +89,13 @@ public class IOHelper {
 	}
 	
 	private static class NullWriter extends Writer {
+		@Override
 		public void close() throws IOException {
 		}
+		@Override
 		public void flush() throws IOException {
 		}
+		@Override
 		public void write(char[] cbuf, int off, int len) throws IOException {
 		}
 	}
@@ -106,7 +109,13 @@ public class IOHelper {
     }
 
     public static void close(InputStream in, OutputStream out) {
-        try { if(in != null) in.close();}catch(Exception e){};
-        try { if(out != null) out.close();}catch(Exception e){};
+        try { if(in != null) {
+            in.close();
+        }
+        }catch(Exception e){};
+        try { if(out != null) {
+            out.close();
+        }
+        }catch(Exception e){};
     }
 }

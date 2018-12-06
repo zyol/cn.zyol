@@ -55,8 +55,8 @@ public class Table {
             String name = column.getCamelName().toLowerCase();
             if (name.startsWith("createtime") || name.startsWith("createuserid") ||
                     name.startsWith("lastupdatetime")
-                    || name.equalsIgnoreCase("updatetime")
-                    || name.equalsIgnoreCase("updateuserid")
+                    || "updatetime".equalsIgnoreCase(name)
+                    || "updateuserid".equalsIgnoreCase(name)
                     || name.startsWith("lastupdateuserid")
                     )
             {
@@ -167,7 +167,9 @@ public class Table {
      * 数据库中表的别名，等价于:  getRemarks().isEmpty() ? getClassName() : getRemarks()
      */
     public String getTableAlias() {
-        if (StringHelper.isNotBlank(tableAlias)) return tableAlias;
+        if (StringHelper.isNotBlank(tableAlias)) {
+            return tableAlias;
+        }
         return StringHelper.removeCrlf(StringHelper.defaultIfEmpty(getRemarks(), getClassName()));
     }
 
@@ -267,8 +269,9 @@ public class Table {
     public List<Column> getPkColumns() {
         List results = new ArrayList();
         for (Column c : getColumns()) {
-            if (c.isPk())
+            if (c.isPk()) {
                 results.add(c);
+            }
         }
         return results;
     }
@@ -281,8 +284,9 @@ public class Table {
     public List<Column> getNotPkColumns() {
         List results = new ArrayList();
         for (Column c : getColumns()) {
-            if (!c.isPk())
+            if (!c.isPk()) {
                 results.add(c);
+            }
         }
         return results;
     }
@@ -316,8 +320,9 @@ public class Table {
     public List<Column> getEnumColumns() {
         List results = new ArrayList();
         for (Column c : getColumns()) {
-            if (!c.isEnumColumn())
+            if (!c.isEnumColumn()) {
                 results.add(c);
+            }
         }
         return results;
     }
@@ -426,6 +431,7 @@ public class Table {
     }
 
 
+    @Override
     public String toString() {
         return "Database Table:" + getSqlName() + " to ClassName:" + getClassName();
     }

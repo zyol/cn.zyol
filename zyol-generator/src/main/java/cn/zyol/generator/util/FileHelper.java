@@ -38,10 +38,12 @@ public class FileHelper {
 	 * 得到相对路径
 	 */
 	public static String getRelativePath(File baseDir,File file) {
-		if(baseDir.equals(file))
-			return "";
-		if(baseDir.getParentFile() == null)
-			return file.getAbsolutePath().substring(baseDir.getAbsolutePath().length());
+		if(baseDir.equals(file)) {
+            return "";
+        }
+		if(baseDir.getParentFile() == null) {
+            return file.getAbsolutePath().substring(baseDir.getAbsolutePath().length());
+        }
 		return file.getAbsolutePath().substring(baseDir.getAbsolutePath().length()+1);
 	}
 
@@ -49,6 +51,7 @@ public class FileHelper {
 		ArrayList arrayList = new ArrayList();
 		searchAllNotIgnoreFile(dir,arrayList);
 		Collections.sort(arrayList,new Comparator<File>() {
+			@Override
 			public int compare(File o1, File o2) {
 				return o1.getAbsolutePath().compareTo(o2.getAbsolutePath());
 			}
@@ -77,7 +80,9 @@ public class FileHelper {
 	}
 
 	public static File mkdir(String dir,String file) {
-		if(dir == null) throw new IllegalArgumentException("dir must be not null");
+		if(dir == null) {
+            throw new IllegalArgumentException("dir must be not null");
+        }
 		File result = new File(dir,file);
 		parnetMkdir(result);
 		return result;
@@ -113,18 +118,24 @@ public class FileHelper {
 			binaryExtentionsList.addAll(IOHelper.readLines(new InputStreamReader(input)));
 			input.close();
 	    }catch(Exception e) {
-	        if(!ignoreException)throw new RuntimeException(e);
+	        if(!ignoreException) {
+                throw new RuntimeException(e);
+            }
 	    }
     }
 	
 	/** 检查文件是否是二进制文件 */
     public static boolean isBinaryFile(File file) {
-    	if(file.isDirectory()) return false;
+    	if(file.isDirectory()) {
+            return false;
+        }
         return isBinaryFile(file.getName());
     }
 
     public static boolean isBinaryFile(String filename) {
-    	if(StringHelper.isBlank(getExtension(filename))) return false;
+    	if(StringHelper.isBlank(getExtension(filename))) {
+            return false;
+        }
         return binaryExtentionsList.contains(getExtension(filename).toLowerCase());
     }
 	

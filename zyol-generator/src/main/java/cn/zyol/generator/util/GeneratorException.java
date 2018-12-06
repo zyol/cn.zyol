@@ -32,7 +32,9 @@ public class GeneratorException extends RuntimeException{
 	}
 
 	public void setExceptions(List<Exception> exceptions) {
-		if(exceptions == null) throw new NullPointerException("'exceptions' must be not null");
+		if(exceptions == null) {
+            throw new NullPointerException("'exceptions' must be not null");
+        }
 		this.exceptions = exceptions;
 	}
 	
@@ -67,6 +69,7 @@ public class GeneratorException extends RuntimeException{
 		}
 	}
 	
+	@Override
 	public String toString() {
 		StringWriter out = new StringWriter();
 		for(Exception e : exceptions) {

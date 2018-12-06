@@ -126,12 +126,14 @@ public class JavadocParanamer implements Paranamer {
 	 *             but not a javadoc zip archive.
 	 */
 	public JavadocParanamer(File archiveOrDirectory) throws IOException {
-		if (archiveOrDirectory == null)
-			throw new NullPointerException();
+		if (archiveOrDirectory == null) {
+            throw new NullPointerException();
+        }
 
-		if (!archiveOrDirectory.exists())
-			throw new FileNotFoundException(
-				archiveOrDirectory.getAbsolutePath());
+		if (!archiveOrDirectory.exists()) {
+            throw new FileNotFoundException(
+                archiveOrDirectory.getAbsolutePath());
+        }
 
 		isURI = false;
 		location = archiveOrDirectory.toURI();
@@ -144,10 +146,11 @@ public class JavadocParanamer implements Paranamer {
 			File dir = archiveOrDirectory;
 			File packageList =
 					new File(dir.getAbsolutePath() + "/package-list");
-			if (!packageList.isFile())
-				throw new FileNotFoundException("No package-list found at "
-						+ dir.getAbsolutePath()
-						+ ". Not a valid Javadoc directory.");
+			if (!packageList.isFile()) {
+                throw new FileNotFoundException("No package-list found at "
+                        + dir.getAbsolutePath()
+                        + ". Not a valid Javadoc directory.");
+            }
 			// it appear to be a valid Javadoc directory
 			FileInputStream input = new FileInputStream(packageList);
 			try {
@@ -161,9 +164,10 @@ public class JavadocParanamer implements Paranamer {
 			isArchive = true;
 			isDirectory = false;
 			File archive = archiveOrDirectory;
-			if (!archive.getAbsolutePath().toLowerCase().endsWith(".zip"))
-				throw new IllegalArgumentException(archive.getAbsolutePath()
-						+ " is not a zip file.");
+			if (!archive.getAbsolutePath().toLowerCase().endsWith(".zip")) {
+                throw new IllegalArgumentException(archive.getAbsolutePath()
+                        + " is not a zip file.");
+            }
 			// check that a "package-list" exists somewhere in the archive
 			ZipFile zip = new ZipFile(archive);
 			try {
@@ -184,9 +188,10 @@ public class JavadocParanamer implements Paranamer {
 						packageLists.put(size, entry);
 					}
 				}
-				if (packageLists.size() == 0)
-					throw new FileNotFoundException(
-						"no package-list found in archive");
+				if (packageLists.size() == 0) {
+                    throw new FileNotFoundException(
+                        "no package-list found in archive");
+                }
 
 				// pick the largest package-list file, it's most likely the one we want
 				ZipEntry entry = packageLists.get(packageLists.lastKey());
@@ -204,10 +209,11 @@ public class JavadocParanamer implements Paranamer {
 			} finally {
 				zip.close();
 			}
-		} else
-			throw new IllegalArgumentException(
-				archiveOrDirectory.getAbsolutePath()
-						+ " is neither a directory nor a file.");
+		} else {
+            throw new IllegalArgumentException(
+                archiveOrDirectory.getAbsolutePath()
+                        + " is neither a directory nor a file.");
+        }
 	}
 
 	/**
@@ -220,8 +226,9 @@ public class JavadocParanamer implements Paranamer {
 	 *             if any parameter is null
 	 */
 	public JavadocParanamer(URL url) throws IOException {
-		if (url == null)
-			throw new NullPointerException();
+		if (url == null) {
+            throw new NullPointerException();
+        }
 
 		isArchive = false;
 		isDirectory = false;
@@ -243,13 +250,16 @@ public class JavadocParanamer implements Paranamer {
 		}
 	}
 
-    public String[] lookupParameterNames(AccessibleObject methodOrConstructor) {
+    @Override
+	public String[] lookupParameterNames(AccessibleObject methodOrConstructor) {
         return lookupParameterNames(methodOrConstructor, true);
     }
 
-    public String[] lookupParameterNames(AccessibleObject methodOrConstructor, boolean throwExceptionIfMissing) {
-		if (methodOrConstructor == null)
-			throw new NullPointerException();
+    @Override
+	public String[] lookupParameterNames(AccessibleObject methodOrConstructor, boolean throwExceptionIfMissing) {
+		if (methodOrConstructor == null) {
+            throw new NullPointerException();
+        }
 
 		Class<?> klass;
 		String name;
@@ -265,12 +275,14 @@ public class JavadocParanamer implements Paranamer {
 			klass = method.getDeclaringClass();
 			name = method.getName();
 			types = method.getParameterTypes();
-		} else
-			throw new IllegalArgumentException();
+		} else {
+            throw new IllegalArgumentException();
+        }
 
 		// quick check to see if we support the package
-		if (!packages.contains(klass.getPackage().getName()))
-			throw CLASS_NOT_SUPPORTED;
+		if (!packages.contains(klass.getPackage().getName())) {
+            throw CLASS_NOT_SUPPORTED;
+        }
 
 		try {
 			String[] names = getParameterNames(klass, name, types);
@@ -299,21 +311,24 @@ public class JavadocParanamer implements Paranamer {
 	private String[] getParameterNames(Class<?> klass,
 			String constructorOrMethodName, Class<?>[] types) throws IOException {
 		// silly request for names of a parameterless method/constructor!
-		if ((types != null) && (types.length == 0))
-			return new String[0];
+		if ((types != null) && (types.length == 0)) {
+            return new String[0];
+        }
 
 		String path = getCanonicalName(klass).replace('.', '/');
 		if (isArchive) {
 			ZipFile archive = new ZipFile(new File(location));
 			ZipEntry entry = archive.getEntry(base + path + ".html");
-			if (entry == null)
-				throw CLASS_NOT_SUPPORTED;
+			if (entry == null) {
+                throw CLASS_NOT_SUPPORTED;
+            }
 			InputStream input = archive.getInputStream(entry);
 			return getParameterNames2(input, constructorOrMethodName, types);
 		} else if (isDirectory) {
 			File file = new File(location.getPath() + "/" + path + ".html");
-			if (!file.isFile())
-				throw CLASS_NOT_SUPPORTED;
+			if (!file.isFile()) {
+                throw CLASS_NOT_SUPPORTED;
+            }
 			FileInputStream input = new FileInputStream(file);
 			return getParameterNames2(input, constructorOrMethodName, types);
 		} else if (isURI) {
@@ -361,8 +376,9 @@ public class JavadocParanamer implements Paranamer {
 		// quotes needed to escape array brackets
 		regex.append("\\(\\Q");
 		for (int i = 0; i < types.length; i++) {
-			if (i != 0)
-				regex.append(", ");
+			if (i != 0) {
+                regex.append(", ");
+            }
 			// canonical name deals with arrays
 			regex.append(getCanonicalName(types[i]));
 		}
@@ -374,7 +390,9 @@ public class JavadocParanamer implements Paranamer {
 		Matcher matcher = pattern.matcher(javadoc);
 		if (!matcher.find())
 			// not found
-			return Paranamer.EMPTY_NAMES;
+        {
+            return Paranamer.EMPTY_NAMES;
+        }
 
 		// found it. Lookup the parameter names.
 		String[] names = new String[types.length];
@@ -385,8 +403,9 @@ public class JavadocParanamer implements Paranamer {
 		Matcher matcherParams = patternParams.matcher(javadoc);
 		for (int i = 0; i < types.length; i++) {
 			boolean find = matcherParams.find(start);
-			if (!find)
-				return Paranamer.EMPTY_NAMES;
+			if (!find) {
+                return Paranamer.EMPTY_NAMES;
+            }
 			start = matcherParams.end();
 			names[i] = matcherParams.group(1);
 		}
@@ -395,8 +414,9 @@ public class JavadocParanamer implements Paranamer {
 
 	// doesn't support names of nested classes
 	private String getCanonicalName(Class<?> klass) {
-		if (klass.isArray())
-			return getCanonicalName(klass.getComponentType()) + "[]";
+		if (klass.isArray()) {
+            return getCanonicalName(klass.getComponentType()) + "[]";
+        }
 
 		return klass.getName();
 	}
@@ -438,13 +458,14 @@ public class JavadocParanamer implements Paranamer {
 		conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
 		conn.connect();
 		String encoding = conn.getContentEncoding();
-		if ((encoding != null) && encoding.equalsIgnoreCase("gzip"))
-			return new GZIPInputStream(conn.getInputStream());
-		else if ((encoding != null) && encoding.equalsIgnoreCase("deflate"))
-			return new InflaterInputStream(conn.getInputStream(), new Inflater(
-				true));
-		else
-			return conn.getInputStream();
+		if ((encoding != null) && "gzip".equalsIgnoreCase(encoding)) {
+            return new GZIPInputStream(conn.getInputStream());
+        } else if ((encoding != null) && "deflate".equalsIgnoreCase(encoding)) {
+            return new InflaterInputStream(conn.getInputStream(), new Inflater(
+                true));
+        } else {
+            return conn.getInputStream();
+        }
 	}
 
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.util.StringUtils;
-import service.AuthenticationRpcService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -17,22 +16,30 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebFilter(urlPatterns = "/*")
 @Component
-@ConfigurationProperties(prefix = "zyolContainer")
+@WebFilter(urlPatterns = "/*")
+@ConfigurationProperties(prefix = "zyolFilter")
+//@PropertySource("classpath:ES/elasticsearch.properties")
 public class ZyolContainer extends ParamFilter implements Filter {
-
     /**
      * 是否服务端，默认为false
      */
     private boolean isServer;
 
-    private List<String> filterNames;
+    private List<String> filterNames = new LinkedList<>();
 
-    private List<ClientFilter> filters;
+    private List<ClientFilter> filters = new LinkedList<>();
 
     private PathMatcher pathMatcher = new AntPathMatcher();
 
+
+    public List<String> getFilterNames() {
+        return filterNames;
+    }
+
+    public void setFilterNames(List<String> filterNames) {
+        this.filterNames = filterNames;
+    }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -41,14 +48,14 @@ public class ZyolContainer extends ParamFilter implements Filter {
         } else if (StringUtils.isEmpty(ssoServerUrl)) {
             throw new IllegalArgumentException("ssoServerUrl不能为空");
         }
-        authenticationRpcService = (AuthenticationRpcService) ApplicationContextHelper.getBean("authenticationRpcService");
-        if (authenticationRpcService == null) {
-            throw new IllegalArgumentException("authenticationRpcService初始化失败");
-        }
+//        authenticationRpcService = (AuthenticationRpcService) ApplicationContextHelper.getBean("authenticationRpcService");
+//        if (authenticationRpcService == null) {
+//            throw new IllegalArgumentException("authenticationRpcService初始化失败");
+//        }
         if (filterNames == null || filterNames.size() == 0) {
             throw new IllegalArgumentException("filterNames不能为空");
         }
-        filters = new LinkedList<>();
+
         for (String name : filterNames) {
             ClientFilter clientFilter = (ClientFilter) ApplicationContextHelper.getBean(name);
             if (clientFilter == null) {

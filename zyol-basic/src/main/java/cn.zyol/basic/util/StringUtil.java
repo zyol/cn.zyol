@@ -242,7 +242,7 @@ public class StringUtil extends StringUtils {
      * @return String, 返回的字符串
      */
     public static String substring(String origin, int len) {
-        if (origin == null || origin.equals("") || len < 1) {
+        if (origin == null || "".equals(origin) || len < 1) {
             return "";
         }
         byte[] strByte = new byte[len];
@@ -320,7 +320,7 @@ public class StringUtil extends StringUtils {
      * @return
      */
     public static String cutString(String str, int length) {
-        if (str == null || str.equals("") || length < 1) {
+        if (str == null || "".equals(str) || length < 1) {
             return "";
         }
         if (str.length() < length) {

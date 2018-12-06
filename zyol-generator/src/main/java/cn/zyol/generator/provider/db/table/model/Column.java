@@ -282,6 +282,7 @@ public class Column {
 	 * @ Write javadocs for method
 	 * @ Write javadocs for return value
 	 */
+	@Override
 	public int hashCode() {
 		if(getTable() != null) {
 			return (getTable().getSqlName() + "#" + getSqlName()).hashCode();
@@ -300,8 +301,11 @@ public class Column {
 	 * @  Write javadocs for method parameter
 	 * @  Write javadocs for return value
 	 */
+	@Override
 	public boolean equals(Object o) {
-		if(this == o) return true;
+		if(this == o) {
+            return true;
+        }
 		if(o instanceof Column) {
 			Column other = (Column)o;
 			if(getSqlName().equals(other.getSqlName())) {
@@ -318,6 +322,7 @@ public class Column {
 	 * @  Write javadocs for method
 	 * @  Write javadocs for return value
 	 */
+	@Override
 	public String toString() {
 		return getSqlName();
 	}
@@ -464,7 +469,9 @@ public class Column {
 
 	/** 检查是否包含某些关键字,关键字以逗号分隔 */
 	public boolean contains(String keywords) {
-		if(keywords == null) throw new IllegalArgumentException("'keywords' must be not null");
+		if(keywords == null) {
+            throw new IllegalArgumentException("'keywords' must be not null");
+        }
 		return StringHelper.contains(getSqlName(), keywords.split(","));
 	}
 

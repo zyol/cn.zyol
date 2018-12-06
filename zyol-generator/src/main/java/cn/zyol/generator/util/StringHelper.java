@@ -17,7 +17,9 @@ public class StringHelper {
     public volatile static boolean USE_DEFAULT = true;
 
     public static String removeCrlf(String str) {
-        if (str == null) return null;
+        if (str == null) {
+            return null;
+        }
         return StringHelper.join(StringHelper.tokenizeToStringArray(str, "\t\n\r\f"), " ");
     }
 
@@ -32,7 +34,9 @@ public class StringHelper {
     }
 
     public static String unescapeXml(String str) {
-        if (str == null) return null;
+        if (str == null) {
+            return null;
+        }
         for (String key : XML.keySet()) {
             String value = XML.get(key);
             str = StringHelper.replace(str, "&" + key + ";", value);
@@ -46,8 +50,12 @@ public class StringHelper {
     }
 
     public static String removePrefix(String str, String prefix, boolean ignoreCase) {
-        if (str == null) return null;
-        if (prefix == null) return str;
+        if (str == null) {
+            return null;
+        }
+        if (prefix == null) {
+            return str;
+        }
         if (ignoreCase) {
             if (str.toLowerCase().startsWith(prefix.toLowerCase())) {
                 return str.substring(prefix.length());
@@ -69,7 +77,9 @@ public class StringHelper {
     }
 
     public static String getExtension(String str) {
-        if (str == null) return null;
+        if (str == null) {
+            return null;
+        }
         int i = str.lastIndexOf('.');
         if (i >= 0) {
             return str.substring(i + 1);
@@ -98,8 +108,12 @@ public class StringHelper {
     }
 
     public static boolean contains(String str, String... keywords) {
-        if (str == null) return false;
-        if (keywords == null) throw new IllegalArgumentException("'keywords' must be not null");
+        if (str == null) {
+            return false;
+        }
+        if (keywords == null) {
+            throw new IllegalArgumentException("'keywords' must be not null");
+        }
 
         for (String keyword : keywords) {
             if (str.contains(keyword.toLowerCase())) {
@@ -319,7 +333,9 @@ public class StringHelper {
      * @return the converted name
      */
     public static String toUnderscoreName(String name) {
-        if (name == null) return null;
+        if (name == null) {
+            return null;
+        }
 
         String filteredName = name;
         if (filteredName.indexOf("_") >= 0 && filteredName.equals(filteredName.toUpperCase())) {
@@ -335,11 +351,11 @@ public class StringHelper {
             for (int i = 1; i < filteredName.length(); i++) {
                 String preChart = filteredName.substring(i - 1, i);
                 String c = filteredName.substring(i, i + 1);
-                if (c.equals("_")) {
+                if ("_".equals(c)) {
                     result.append("_");
                     continue;
                 }
-                if (preChart.equals("_")) {
+                if ("_".equals(preChart)) {
                     result.append(c.toLowerCase());
                     continue;
                 }
@@ -372,7 +388,9 @@ public class StringHelper {
     static Pattern two = Pattern.compile("(.*)\\((.*)\\)");
 
     public static List<EnumMetaDada> string2EnumMetaData(String data) {
-        if (data == null || data.trim().length() == 0) return new ArrayList();
+        if (data == null || data.trim().length() == 0) {
+            return new ArrayList();
+        }
         //enumAlias(enumKey,enumDesc),enumAlias(enumDesc)
 
         List<EnumMetaDada> list = new ArrayList();
@@ -414,7 +432,9 @@ public class StringHelper {
     }
 
     public static String[] tokenizeToStringArray(String str, String seperators) {
-        if (str == null) return new String[0];
+        if (str == null) {
+            return new String[0];
+        }
         StringTokenizer tokenlizer = new StringTokenizer(str, seperators);
         List result = new ArrayList();
 
@@ -436,7 +456,9 @@ public class StringHelper {
     }
 
     public static String join(Object[] array, String seperator) {
-        if (array == null) return null;
+        if (array == null) {
+            return null;
+        }
         StringBuffer result = new StringBuffer();
         for (int i = 0; i < array.length; i++) {
             result.append(array[i]);
@@ -448,7 +470,9 @@ public class StringHelper {
     }
 
     public static int containsCount(String string, String keyword) {
-        if (string == null) return 0;
+        if (string == null) {
+            return 0;
+        }
         int count = 0;
         for (int i = 0; i < string.length(); i++) {
             int indexOf = string.indexOf(keyword, i);

@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 
 @SpringBootApplication
-@ServletComponentScan //使用注解注册Servlet
+@ServletComponentScan(basePackages = {"cn.zyol"}) //使用注解注册Servlet
 @MapperScan("cn.zyol.sso.dao") //通过使用@MapperScan可以指定要扫描的Mapper类的包的路径
 @ComponentScan(basePackages = {"cn.zyol.sso.service", "cn.zyol.sso.web"})
 public class Application implements EmbeddedServletContainerCustomizer {

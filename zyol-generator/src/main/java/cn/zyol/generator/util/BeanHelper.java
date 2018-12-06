@@ -20,8 +20,9 @@ public class BeanHelper {
 	 * @see #org.apache.commons.beanutils.PropertyUtils.describe(obj)
 	 */ 
 	public static Map describe(Object obj) {
-		if (obj instanceof Map)
-			return (Map) obj;
+		if (obj instanceof Map) {
+            return (Map) obj;
+        }
 		Map map = new HashMap();
 		PropertyDescriptor[] descriptors = getPropertyDescriptors(obj.getClass());
 		for(int i = 0; i < descriptors.length; i++ ) {
@@ -118,7 +119,9 @@ public class BeanHelper {
     }
 
     private static Object convert(Object value, Class<?> targetType) {
-        if(value == null) return null;
+        if(value == null) {
+            return null;
+        }
         if(targetType == String.class) {
             return value.toString();
         }else {

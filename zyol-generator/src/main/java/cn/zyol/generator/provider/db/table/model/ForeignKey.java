@@ -79,15 +79,17 @@ public class ForeignKey {
 		List parentPrimaryKeys    = parentTable.getPrimaryKeyColumns();
 		List foreignPrimaryKeys   = foreignTable.getPrimaryKeyColumns();
 		
-		if (hasAllPrimaryKeys(parentPrimaryKeys,parentColumns))
-			firstRelation = "one";
-		else
-			firstRelation = "many";
+		if (hasAllPrimaryKeys(parentPrimaryKeys,parentColumns)) {
+            firstRelation = "one";
+        } else {
+            firstRelation = "many";
+        }
 
-		if (hasAllPrimaryKeys(foreignPrimaryKeys,columns))
-			secondRelation = "one";
-		else
-			secondRelation = "many";
+		if (hasAllPrimaryKeys(foreignPrimaryKeys,columns)) {
+            secondRelation = "one";
+        } else {
+            secondRelation = "many";
+        }
 
 		relationShip = firstRelation + "-to-" + secondRelation;
 		 
@@ -96,14 +98,16 @@ public class ForeignKey {
 		boolean hasAll = true;
 		// if size is not equal then false
 		int numKeys = pkeys.size();
-		if (numKeys != cols.size())
-			return false;
+		if (numKeys != cols.size()) {
+            return false;
+        }
 		
 		for (int i=0;i<numKeys;i++) {
 			Column col = (Column) pkeys.get(i);
 			String colname = col.getColumnName();
-			if (!cols.contains(colname))
-				return false;
+			if (!cols.contains(colname)) {
+                return false;
+            }
 		}
 		
 		return hasAll;
@@ -151,8 +155,9 @@ public class ForeignKey {
 	 * @return Returns the firstRelation.
 	 */
 	public String getFirstRelation() {
-		if (firstRelation == null)
-			initRelationship();
+		if (firstRelation == null) {
+            initRelationship();
+        }
 		return firstRelation;
 	}
 	public Table getSqlTable() {
@@ -174,16 +179,18 @@ public class ForeignKey {
 	 * @return Returns the relationShip.
 	 */
 	public String getRelationShip() {
-		if (relationShip == null)
-			initRelationship();
+		if (relationShip == null) {
+            initRelationship();
+        }
 		return relationShip;
 	}
 	/**
 	 * @return Returns the secondRelation.
 	 */
 	public String getSecondRelation() {
-		if (secondRelation == null)
-			initRelationship();
+		if (secondRelation == null) {
+            initRelationship();
+        }
 		return secondRelation;
 	}
 	/**
@@ -223,6 +230,7 @@ public class ForeignKey {
 			this.columnSqlName = columnSqlName;
 		}
 		
+		@Override
 		public String toString() {
 			if(StringHelper.isBlank(schemaName)) {
 				return tableName+"("+columnSqlName+")";
@@ -232,7 +240,9 @@ public class ForeignKey {
 		}
 
 		public static String toString(ReferenceKey k) {
-			if(k == null) return null;
+			if(k == null) {
+                return null;
+            }
 			return k.toString();
 		}
 		

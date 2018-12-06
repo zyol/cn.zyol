@@ -61,7 +61,9 @@ public class XMLHelper {
     }
     
     private static Map<String,String> attrbiuteToMap(NamedNodeMap attributes) {
-        if(attributes == null) return new LinkedHashMap<String,String>();
+        if(attributes == null) {
+            return new LinkedHashMap<String,String>();
+        }
         Map<String,String> result = new LinkedHashMap<String,String>();
         for(int i = 0; i < attributes.getLength(); i++) {
             result.put(attributes.item(i).getNodeName(), attributes.item(i).getNodeValue());
@@ -85,6 +87,7 @@ public class XMLHelper {
         public Map<String,String> attributes = new HashMap<String,String>();
         public List<NodeData> childs = new ArrayList<NodeData>();
         
+        @Override
         public String toString() {
             return "nodeName="+nodeName+",attributes="+attributes+" nodeValue="+nodeValue+" child:\n"+childs;
         }
@@ -101,7 +104,9 @@ public class XMLHelper {
     }
     
     public static String getXMLEncoding(String s) {
-    	if(s == null) return null;
+    	if(s == null) {
+            return null;
+        }
     	Pattern p = Pattern.compile("<\\?xml.*encoding=[\"'](.*)[\"']\\?>");
     	Matcher m = p.matcher(s);
     	if(m.find()) {
@@ -124,7 +129,9 @@ public class XMLHelper {
     
     //只移除default namesapce
     public static String removeXmlns(String s) {
-    	if(s == null) return null;
+    	if(s == null) {
+            return null;
+        }
     	s = s.replaceAll("(?s)xmlns=['\"].*?['\"]", "");
 //    	s = s.replaceAll("(?s)xmlns:?\\w*=['\"].*?['\"]", "");
     	s = s.replaceAll("(?s)\\w*:schemaLocation=['\"].*?['\"]", "");

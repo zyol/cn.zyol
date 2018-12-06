@@ -20,8 +20,12 @@ public class SqlParseHelper {
 		private String name;
 		private String alias;
 		public NameWithAlias(String tableName, String tableAlias) {
-			if(tableName.trim().indexOf(' ') >= 0) throw new IllegalArgumentException("error name:"+tableName);
-			if(tableAlias != null && tableAlias.trim().indexOf(' ') >= 0) throw new IllegalArgumentException("error alias:"+tableAlias);
+			if(tableName.trim().indexOf(' ') >= 0) {
+                throw new IllegalArgumentException("error name:"+tableName);
+            }
+			if(tableAlias != null && tableAlias.trim().indexOf(' ') >= 0) {
+                throw new IllegalArgumentException("error alias:"+tableAlias);
+            }
 			this.name = tableName.trim();
 			this.alias = tableAlias == null ? null : tableAlias.trim();
 		} 
@@ -31,6 +35,7 @@ public class SqlParseHelper {
 		public String getAlias() {
 			return StringHelper.isBlank(alias) ? getName() : alias;
 		}
+		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
@@ -38,21 +43,28 @@ public class SqlParseHelper {
 					+ ((name == null) ? 0 : name.hashCode());
 			return result;
 		}
+		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
+			if (this == obj) {
+                return true;
+            }
+			if (obj == null) {
+                return false;
+            }
+			if (getClass() != obj.getClass()) {
+                return false;
+            }
 			NameWithAlias other = (NameWithAlias) obj;
 			if (name == null) {
-				if (other.name != null)
-					return false;
-			} else if (!name.equals(other.name))
-				return false;
+				if (other.name != null) {
+                    return false;
+                }
+			} else if (!name.equals(other.name)) {
+                return false;
+            }
 			return true;
 		}
+		@Override
 		public String toString() {
 			return StringHelper.isBlank(alias) ? name  : name +" as " + alias;
 		}
@@ -172,8 +184,12 @@ public class SqlParseHelper {
 	    private String suffix;
 	    
         public NamedSqlConverter(String prefix, String suffix) {
-            if(prefix == null) throw new NullPointerException("'prefix' must be not null");
-            if(suffix == null) throw new NullPointerException("'suffix' must be not null");
+            if(prefix == null) {
+                throw new NullPointerException("'prefix' must be not null");
+            }
+            if(suffix == null) {
+                throw new NullPointerException("'suffix' must be not null");
+            }
             this.prefix = prefix;
             this.suffix = suffix;
         }
@@ -259,16 +275,24 @@ public class SqlParseHelper {
 	 * @return
 	 */
 	public static String removeSelect(String sql) {
-		if(StringHelper.isBlank(sql)) throw new IllegalArgumentException("sql must be not empty");
+		if(StringHelper.isBlank(sql)) {
+            throw new IllegalArgumentException("sql must be not empty");
+        }
 		int beginPos = sql.toLowerCase().indexOf("from");
-		if(beginPos == -1) throw new IllegalArgumentException(" sql : " + sql + " must has a keyword 'from'");
+		if(beginPos == -1) {
+            throw new IllegalArgumentException(" sql : " + sql + " must has a keyword 'from'");
+        }
 		return sql.substring(beginPos);
 	}
 
 	public static String getSelect(String sql) {
-		if(StringHelper.isBlank(sql)) throw new IllegalArgumentException("sql must be not empty");
+		if(StringHelper.isBlank(sql)) {
+            throw new IllegalArgumentException("sql must be not empty");
+        }
 		int beginPos = sql.toLowerCase().indexOf("from");
-		if(beginPos == -1) throw new IllegalArgumentException(" sql : " + sql + " must has a keyword 'from'");
+		if(beginPos == -1) {
+            throw new IllegalArgumentException(" sql : " + sql + " must has a keyword 'from'");
+        }
 		return sql.substring(0,beginPos);
 	}
 	

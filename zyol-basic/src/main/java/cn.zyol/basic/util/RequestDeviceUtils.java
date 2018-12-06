@@ -88,19 +88,19 @@ public class RequestDeviceUtils {
         boolean mobileFlag = false;
         String via = request.getHeader("Via");
         String userAgent = request.getHeader("user-agent");
-        for (int i = 0; via != null && !via.trim().equals("") && i < mobileGateWayHeaders.length; i++) {
+        for (int i = 0; via != null && !"".equals(via.trim()) && i < mobileGateWayHeaders.length; i++) {
             if (via.contains(mobileGateWayHeaders[i])) {
                 mobileFlag = true;
                 break;
             }
         }
-        for (int i = 0; !mobileFlag && userAgent != null && !userAgent.trim().equals("") && i < mobileUserAgents.length; i++) {
+        for (int i = 0; !mobileFlag && userAgent != null && !"".equals(userAgent.trim()) && i < mobileUserAgents.length; i++) {
             if (userAgent.contains(mobileUserAgents[i])) {
                 mobileFlag = true;
                 break;
             }
         }
-        for (int i = 0; userAgent != null && !userAgent.trim().equals("") && i < deviceHeaders.length; i++) {
+        for (int i = 0; userAgent != null && !"".equals(userAgent.trim()) && i < deviceHeaders.length; i++) {
             if (userAgent.contains(deviceHeaders[i])) {
                 pcFlag = true;
             }
@@ -113,7 +113,7 @@ public class RequestDeviceUtils {
     
     public static String getDeviceType(HttpServletRequest request) {
         String userAgent = request.getHeader("user-agent");
-        for (int i = 0; userAgent != null && !userAgent.trim().equals("") && i < deviceHeaders.length; i++) {
+        for (int i = 0; userAgent != null && !"".equals(userAgent.trim()) && i < deviceHeaders.length; i++) {
             if (userAgent.contains(deviceHeaders[i])) {
                 return deviceHeaders[i];
             }
@@ -126,15 +126,15 @@ public class RequestDeviceUtils {
      */
     public static String getVcDevice(String userAgent) {
         String deviceType = "";
-        for (int i = 0; userAgent != null && !userAgent.trim().equals("") && i < deviceHeaders.length; i++) {
+        for (int i = 0; userAgent != null && !"".equals(userAgent.trim()) && i < deviceHeaders.length; i++) {
             if (userAgent.contains(deviceHeaders[i])) {
                 deviceType = deviceHeaders[i];
             }
         }
-        if (null != deviceType && deviceType.equals("Android")) {
+        if (null != deviceType && "Android".equals(deviceType)) {
             return "android";
         }
-        if (null != deviceType && (deviceType.equals("iPhone") || deviceType.equals("iPad"))) {
+        if (null != deviceType && ("iPhone".equals(deviceType) || "iPad".equals(deviceType))) {
             return "ios";
         }
         return "";

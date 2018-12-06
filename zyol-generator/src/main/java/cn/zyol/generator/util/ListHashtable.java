@@ -16,10 +16,12 @@ import java.util.List;
  */
 public class ListHashtable extends Hashtable {
 	protected List orderedKeys = new ArrayList();
+	@Override
 	public synchronized void clear() {
 		super.clear();
 		orderedKeys = new ArrayList();
 	}
+	@Override
 	public synchronized Object put(Object aKey, Object aValue) {
 		if (orderedKeys.contains(aKey)) {
 			int pos = orderedKeys.indexOf(aKey);
@@ -30,13 +32,15 @@ public class ListHashtable extends Hashtable {
 			if (aKey instanceof Integer) {
 				Integer key = (Integer) aKey;
 				int pos = getFirstKeyGreater(key.intValue());
-				if (pos >= 0)
-					orderedKeys.add(pos,aKey);
-				else
-					orderedKeys.add(aKey);
+				if (pos >= 0) {
+                    orderedKeys.add(pos,aKey);
+                } else {
+                    orderedKeys.add(aKey);
+                }
 			}
-			else 
-				orderedKeys.add(aKey);
+			else {
+                orderedKeys.add(aKey);
+            }
 		}
 		return super.put(aKey, aValue);
 	}
@@ -53,15 +57,18 @@ public class ListHashtable extends Hashtable {
 		for (int i=0;i<numKeys;i++) {
 			Integer key = (Integer) getOrderedKey(i);
 			int keyval = key.intValue();
-			if (keyval < aKey)
-				++pos;
-			else
-				break;
+			if (keyval < aKey) {
+                ++pos;
+            } else {
+                break;
+            }
 		}
-		if (pos >= numKeys)
-			pos = -1;
+		if (pos >= numKeys) {
+            pos = -1;
+        }
 		return pos;
 	}
+	@Override
 	public synchronized Object remove(Object aKey) {
 		if (orderedKeys.contains(aKey)) {
 			int pos = orderedKeys.indexOf(aKey);
@@ -77,11 +84,13 @@ public class ListHashtable extends Hashtable {
 	public void reorderIntegerKeys() {
 		List keys = getOrderedKeys();
 		int numKeys = keys.size();
-		if (numKeys <=0 )
-			return;
+		if (numKeys <=0 ) {
+            return;
+        }
 		
-		if (!(getOrderedKey(0) instanceof Integer))
-			return;
+		if (!(getOrderedKey(0) instanceof Integer)) {
+            return;
+        }
 		
 		List newKeys   = new ArrayList();
 		List newValues = new ArrayList();
@@ -93,10 +102,11 @@ public class ListHashtable extends Hashtable {
 			int pos = 0;
 			for (int j=0;j<numNew;j++) {
 				Integer newKey = (Integer) newKeys.get(j);
-				if (newKey.intValue() < key.intValue()) 
-					++pos;
-				else
-					break;
+				if (newKey.intValue() < key.intValue()) {
+                    ++pos;
+                } else {
+                    break;
+                }
 			}
 			if (pos >= numKeys) {
 				newKeys.add(key);
@@ -112,6 +122,7 @@ public class ListHashtable extends Hashtable {
 			put(newKeys.get(l),newValues.get(l));
 		}
 	}
+	@Override
 	public String toString() {
 		StringBuffer x = new StringBuffer();
 		x.append("Ordered Keys: ");

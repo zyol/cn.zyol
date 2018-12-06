@@ -31,11 +31,14 @@ public class MethodParameter {
 	}
     
 	public String getName() {
-	    if(paramIndex < 0) return null;
+	    if(paramIndex < 0) {
+            return null;
+        }
 		String[] parameterNames = lookupParameterNamesByParanamer();
 		if(parameterNames == null || parameterNames.length == 0)  {
-		    if(StringHelper.isNotBlank(paramName))
-		        return paramName;
+		    if(StringHelper.isNotBlank(paramName)) {
+                return paramName;
+            }
 		    if(paramClass.getClazz().isPrimitive() || paramClass.getClazz().getName().startsWith("java.")) {
 		        return "param"+paramIndex;
 		    }else {
@@ -181,6 +184,7 @@ public class MethodParameter {
         
 	}
     
+	@Override
 	public String toString() {
 		return "MethodParameter:"+getName()+"="+getJavaType();
 	}

@@ -689,7 +689,7 @@ public class DateUtil {
      * @return
      */
     public static String convert2String(long time, String format) {
-        if (time > 0l) {
+        if (time > 0L) {
             if (StringUtils.isBlank(format)) {
                 format = DateUtil.datePattern;
             }
@@ -708,7 +708,7 @@ public class DateUtil {
      * @return
      */
     public static Date convert2Date(long time, String format) {
-        if (time > 0l) {
+        if (time > 0L) {
             String strDate = convert2String(time, format);
             return getDate(strDate, format);
         }
@@ -817,7 +817,7 @@ public class DateUtil {
      * @return
      */
     public static Date longToDate(long time, String format) {
-        if (time > 0l) {
+        if (time > 0L) {
             String strDate = longToString(time, format);
             return getDate(strDate, format);
         }
@@ -892,7 +892,7 @@ public class DateUtil {
      * @return
      */
     public static String timeStamp2Date(String seconds, String format) {
-        if (seconds == null || seconds.isEmpty() || seconds.equals("null")) {
+        if (seconds == null || seconds.isEmpty() || "null".equals(seconds)) {
             return "";
         }
         if (format == null || format.isEmpty()) {

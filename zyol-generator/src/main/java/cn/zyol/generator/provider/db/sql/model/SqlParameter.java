@@ -43,12 +43,16 @@ public class SqlParameter extends Column {
 //    	}
 
 		public String getParameterClass() {
-		    if(StringHelper.isNotBlank(parameterClass)) return parameterClass;
+		    if(StringHelper.isNotBlank(parameterClass)) {
+                return parameterClass;
+            }
 		    return getSimpleJavaType();
         }
 
 		public String getPrimitiveParameterClass() {
-		    if(StringHelper.isNotBlank(parameterClass)) return JavaPrimitiveTypeMapping.getPrimitiveType(parameterClass);
+		    if(StringHelper.isNotBlank(parameterClass)) {
+                return JavaPrimitiveTypeMapping.getPrimitiveType(parameterClass);
+            }
 		    return getPrimitiveJavaType();
         }
 		
@@ -130,9 +134,14 @@ public class SqlParameter extends Column {
 			this.isListParam = isListParam;
 		}
 		
+		@Override
 		public boolean equals(Object obj) {
-			if(obj == this) return true;
-			if(obj == null) return false;
+			if(obj == this) {
+                return true;
+            }
+			if(obj == null) {
+                return false;
+            }
 			if(obj instanceof SqlParameter) {
 				SqlParameter other = (SqlParameter)obj;
 				return paramName.equals(other.getParamName());
@@ -140,9 +149,11 @@ public class SqlParameter extends Column {
 				return false;
 			}
 		}
+		@Override
 		public int hashCode() {
 			return paramName.hashCode();
 		}
+		@Override
 		public String toString() {
 			return "paramName:"+paramName+" preferredParameterJavaType:"+getPreferredParameterJavaType();
 		}

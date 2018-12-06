@@ -21,14 +21,18 @@ public class JavaSourceParanamer implements Paranamer{
     private ClassLoader classLoader;
     
     public JavaSourceParanamer(ClassLoader classLoader) {
-        if(classLoader == null) throw new IllegalArgumentException("'classLoader' must be not null");
+        if(classLoader == null) {
+            throw new IllegalArgumentException("'classLoader' must be not null");
+        }
     	this.classLoader = classLoader;
     }
     
+    @Override
     public String[] lookupParameterNames(AccessibleObject methodOrConstructor) {
         return lookupParameterNames(methodOrConstructor,true);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
 	public String[] lookupParameterNames(AccessibleObject methodOrConstructor,boolean throwExceptionIfMissing) {
         try {
@@ -51,8 +55,9 @@ public class JavaSourceParanamer implements Paranamer{
 	        	}
 	        	return Paranamer.EMPTY_NAMES;
 	        }finally {
-	        	if(javaSourceInputStream != null) 
-	        		javaSourceInputStream.close();
+	        	if(javaSourceInputStream != null) {
+                    javaSourceInputStream.close();
+                }
 	        }
         }catch(IOException e) {
         	if(throwExceptionIfMissing) {

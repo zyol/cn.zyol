@@ -65,10 +65,12 @@ public class AdaptiveParanamer implements Paranamer {
         this.paranamers = paranamers;
     }
 
+    @Override
     public String[] lookupParameterNames(AccessibleObject methodOrConstructor) {
         return lookupParameterNames(methodOrConstructor, true);
     }
 
+    @Override
     public String[] lookupParameterNames(AccessibleObject methodOrCtor, boolean throwExceptionIfMissing) {
         for (int i = 0; i < paranamers.length; i++) {
             Paranamer paranamer = paranamers[i];

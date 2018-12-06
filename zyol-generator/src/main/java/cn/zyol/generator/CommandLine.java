@@ -56,7 +56,9 @@ public class CommandLine {
             }
         } else if ("del".equals(cmd)) {
             String[] args = nextArguments(sc);
-            if (args.length == 0) return;
+            if (args.length == 0) {
+                return;
+            }
             facade.g.setIncludes(getIncludes(args, 1));
             facade.deleteByTable(args[0], getTemplateRootDir());
         } else if ("quit".equals(cmd)) {
@@ -68,7 +70,9 @@ public class CommandLine {
 
     private static String getIncludes(String[] args, int i) {
         String includes = ArrayHelper.getValue(args, i);
-        if (includes == null) return null;
+        if (includes == null) {
+            return null;
+        }
         return includes.indexOf("*") >= 0 || includes.indexOf(",") >= 0 ? includes : includes + "/**";
     }
 

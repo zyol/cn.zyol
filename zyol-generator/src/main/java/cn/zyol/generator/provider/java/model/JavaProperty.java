@@ -54,7 +54,8 @@ public class JavaProperty {
 		return clazz;
 	}
 
-	public String toString() {
+	@Override
+    public String toString() {
 		return "JavaClass:"+clazz+" JavaProperty:"+getName();
 	}
 	

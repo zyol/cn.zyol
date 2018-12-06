@@ -65,7 +65,7 @@ public class Numbers {
         format.setMinimumFractionDigits(2); // 设置数值的小数部分允许的最小位数。
         format.setMaximumIntegerDigits(10); // 设置数值的整数部分允许的最大位数。
         format.setMinimumIntegerDigits(1); // 设置数值的整数部分允许的最小位数.
-        if (unit.equals("万")) {
+        if ("万".equals(unit)) {
             return format.format(val.setScale(2, RoundingMode.HALF_UP).doubleValue()) + unit;
         } else {
             return format.format(val.doubleValue()) + unit;

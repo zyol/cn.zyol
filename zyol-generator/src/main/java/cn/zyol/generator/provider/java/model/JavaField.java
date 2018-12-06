@@ -36,36 +36,44 @@ public class JavaField {
 	}
 
 	public boolean getIsDateTimeField() {
-		return  getJavaType().equalsIgnoreCase("java.util.Date")
-				|| getJavaType().equalsIgnoreCase("java.sql.Date")
-				|| getJavaType().equalsIgnoreCase("java.sql.Timestamp")
-				|| getJavaType().equalsIgnoreCase("java.sql.Time");
+		return "java.util.Date".equalsIgnoreCase(getJavaType())
+				|| "java.sql.Date".equalsIgnoreCase(getJavaType())
+				|| "java.sql.Timestamp".equalsIgnoreCase(getJavaType())
+				|| "java.sql.Time".equalsIgnoreCase(getJavaType());
 	}
 	
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((field == null) ? 0 : field.hashCode());
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (this == obj)
+    @Override
+	public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         JavaField other = (JavaField) obj;
         if (field == null) {
-            if (other.field != null)
+            if (other.field != null) {
                 return false;
-        } else if (!field.equals(other.field))
+            }
+        } else if (!field.equals(other.field)) {
             return false;
+        }
         return true;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
 		return "JavaClass:"+clazz+" JavaField:"+getFieldName();
 	}
 }

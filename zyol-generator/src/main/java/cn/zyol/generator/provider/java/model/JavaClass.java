@@ -64,10 +64,18 @@ public class JavaClass {
 	}
 
     private boolean addImportClass(Set<JavaClass> set, Class<?> clazz) {
-        if(clazz == null) return false;
-        if(clazz.getName().startsWith("java.lang.")) return false;
-        if(clazz.isPrimitive()) return false;
-        if("void".equals(clazz.getName())) return false;
+        if(clazz == null) {
+            return false;
+        }
+        if(clazz.getName().startsWith("java.lang.")) {
+            return false;
+        }
+        if(clazz.isPrimitive()) {
+            return false;
+        }
+        if("void".equals(clazz.getName())) {
+            return false;
+        }
         return set.add(new JavaClass(clazz));
     }
 	
@@ -249,30 +257,38 @@ public class JavaClass {
 		return result;
 	}
 	
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((clazz == null) ? 0 : clazz.hashCode());
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (this == obj)
+    @Override
+	public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         JavaClass other = (JavaClass) obj;
         if (clazz == null) {
-            if (other.clazz != null)
+            if (other.clazz != null) {
                 return false;
-        } else if (!clazz.equals(other.clazz))
+            }
+        } else if (!clazz.equals(other.clazz)) {
             return false;
+        }
         return true;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
 		return "JavaClass:"+clazz.getName();
 	}
 }

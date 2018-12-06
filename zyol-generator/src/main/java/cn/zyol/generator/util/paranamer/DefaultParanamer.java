@@ -52,10 +52,12 @@ public class DefaultParanamer implements Paranamer {
     public DefaultParanamer() {
     }
 
+    @Override
     public String[] lookupParameterNames(AccessibleObject methodOrConstructor) {
         return lookupParameterNames(methodOrConstructor, true);
     }
 
+    @Override
     public String[] lookupParameterNames(AccessibleObject methodOrCtor, boolean throwExceptionIfMissing) {
         // Oh for some commonality between Constructor and Method !!
         Class<?>[] types = null;

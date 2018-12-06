@@ -1,12 +1,10 @@
 package cn.zyol.basic.client;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import service.AuthenticationRpcService;
 
 /**
  * 参数注入Filter
  *
- * @author Joe
  */
 public class ParamFilter {
 
@@ -16,9 +14,8 @@ public class ParamFilter {
     protected String ssoServerUrl;
 
     /**
-     * 单点登录服务端提供的RPC服务，由Spring容器注入
+     * 单点登录服务端提供的RPC服务
      */
-    @Autowired
     protected AuthenticationRpcService authenticationRpcService;
 
     public void setSsoServerUrl(String ssoServerUrl) {

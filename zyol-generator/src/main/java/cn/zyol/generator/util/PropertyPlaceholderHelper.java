@@ -64,8 +64,12 @@ public class PropertyPlaceholderHelper {
 	 */
 	public PropertyPlaceholderHelper(String placeholderPrefix, String placeholderSuffix,
 			String valueSeparator, boolean ignoreUnresolvablePlaceholders) {
-		if(placeholderPrefix == null) throw new IllegalArgumentException("placeholderPrefix must not be null");
-		if(placeholderSuffix == null) throw new IllegalArgumentException("placeholderSuffix must not be null");
+		if(placeholderPrefix == null) {
+            throw new IllegalArgumentException("placeholderPrefix must not be null");
+        }
+		if(placeholderSuffix == null) {
+            throw new IllegalArgumentException("placeholderSuffix must not be null");
+        }
 		this.placeholderPrefix = placeholderPrefix;
 		this.placeholderSuffix = placeholderSuffix;
 		this.valueSeparator = valueSeparator;
@@ -81,8 +85,11 @@ public class PropertyPlaceholderHelper {
 	 * @return the supplied value with placeholders replaced inline.
 	 */
 	public String replacePlaceholders(String value, final Properties properties) {
-		if(properties == null) throw new IllegalArgumentException("Argument 'properties' must not be null.");
+		if(properties == null) {
+            throw new IllegalArgumentException("Argument 'properties' must not be null.");
+        }
 		return replacePlaceholders(value, new PlaceholderResolver() {
+			@Override
 			public String resolvePlaceholder(String placeholderName) {
 				return properties.getProperty(placeholderName);
 			}
@@ -97,7 +104,9 @@ public class PropertyPlaceholderHelper {
 	 * @return the supplied value with placeholders replaced inline.
 	 */
 	public String replacePlaceholders(String value, PlaceholderResolver placeholderResolver) {
-		if(value == null) throw new IllegalArgumentException("Argument 'value' must not be null.");
+		if(value == null) {
+            throw new IllegalArgumentException("Argument 'value' must not be null.");
+        }
 		return parseStringValue(value, placeholderResolver, new HashSet<String>());
 	}
 
@@ -206,6 +215,7 @@ public class PropertyPlaceholderHelper {
 			this.props = props;
 		}
 
+		@Override
 		public String resolvePlaceholder(String placeholderName) {
 			String value = props.getProperty(placeholderName);
 			if(value == null) {

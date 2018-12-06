@@ -76,7 +76,9 @@ public class Generator {
     }
 
     public void setSourceEncoding(String sourceEncoding) {
-        if (sourceEncoding == null) throw new IllegalArgumentException("sourceEncoding must be not null");
+        if (sourceEncoding == null) {
+            throw new IllegalArgumentException("sourceEncoding must be not null");
+        }
         this.sourceEncoding = sourceEncoding;
     }
 
@@ -85,7 +87,9 @@ public class Generator {
     }
 
     public void setOutputEncoding(String outputEncoding) {
-        if (outputEncoding == null) throw new IllegalArgumentException("outputEncoding must be not null");
+        if (outputEncoding == null) {
+            throw new IllegalArgumentException("outputEncoding must be not null");
+        }
         this.outputEncoding = outputEncoding;
     }
 
@@ -101,7 +105,9 @@ public class Generator {
     }
 
     public void setOutRootDir(String v) {
-        if (v == null) throw new IllegalArgumentException("outRootDir must be not null");
+        if (v == null) {
+            throw new IllegalArgumentException("outRootDir must be not null");
+        }
         this.outRootDir = v;
     }
 
@@ -115,8 +121,9 @@ public class Generator {
     }
 
     public void deleteOutRootDir() throws IOException {
-        if (StringHelper.isBlank(getOutRootDir()))
+        if (StringHelper.isBlank(getOutRootDir())) {
             throw new IllegalStateException("'outRootDir' property must be not null.");
+        }
         GLogger.println("[delete dir]    " + getOutRootDir());
         FileHelper.deleteDirectory(new File(getOutRootDir()));
     }
@@ -147,20 +154,27 @@ public class Generator {
     }
 
     private void processTemplateRootDirs(Map templateModel, Map filePathModel, boolean isDelete) throws Exception {
-        if (StringHelper.isBlank(getOutRootDir()))
+        if (StringHelper.isBlank(getOutRootDir())) {
             throw new IllegalStateException("'outRootDir' property must be not null.");
-        if (templateRootDirs.size() == 0) throw new IllegalStateException("'templateRootDirs' cannot empty");
+        }
+        if (templateRootDirs.size() == 0) {
+            throw new IllegalStateException("'templateRootDirs' cannot empty");
+        }
         GeneratorException ge = new GeneratorException("generator occer error, Generator BeanInfo:" + BeanHelper.describe(this));
         for (int i = 0; i < this.templateRootDirs.size(); i++) {
             File templateRootDir = (File) templateRootDirs.get(i);
             List<Exception> exceptions = scanTemplatesAndProcess(templateRootDir, templateModel, filePathModel, isDelete);
             ge.addAll(exceptions);
         }
-        if (!ge.exceptions.isEmpty()) throw ge;
+        if (!ge.exceptions.isEmpty()) {
+            throw ge;
+        }
     }
 
     private List<Exception> scanTemplatesAndProcess(File templateRootDir, Map templateModel, Map filePathModel, boolean isDelete) throws Exception {
-        if (templateRootDir == null) throw new IllegalStateException("'templateRootDir' must be not null");
+        if (templateRootDir == null) {
+            throw new IllegalStateException("'templateRootDir' must be not null");
+        }
         GLogger.println("-------------------load template from templateRootDir = '" + templateRootDir.getAbsolutePath() + "' outRootDir:" + new File(outRootDir).getAbsolutePath());
 
         List srcFiles = FileHelper.searchAllNotIgnoreFile(templateRootDir);
@@ -314,21 +328,29 @@ public class Generator {
 
     static class GeneratorHelper {
         public static boolean isIgnoreTemplateProcess(File srcFile, String templateFile, String includes, String excludes) {
-            if (srcFile.isDirectory() || srcFile.isHidden())
+            if (srcFile.isDirectory() || srcFile.isHidden()) {
                 return true;
-            if (templateFile.trim().equals(""))
+            }
+            if ("".equals(templateFile.trim())) {
                 return true;
+            }
             if (srcFile.getName().toLowerCase().endsWith(".include")) {
                 GLogger.println("[skip]\t\t endsWith '.include' template:" + templateFile);
                 return true;
             }
             templateFile = templateFile.replace('\\', '/');
             for (String exclude : StringHelper.tokenizeToStringArray(excludes, ",")) {
-                if (new AntPathMatcher().match(exclude.replace('\\', '/'), templateFile)) return true;
+                if (new AntPathMatcher().match(exclude.replace('\\', '/'), templateFile)) {
+                    return true;
+                }
             }
-            if (includes == null) return false;
+            if (includes == null) {
+                return false;
+            }
             for (String include : StringHelper.tokenizeToStringArray(includes, ",")) {
-                if (new AntPathMatcher().match(include.replace('\\', '/'), templateFile)) return false;
+                if (new AntPathMatcher().match(include.replace('\\', '/'), templateFile)) {
+                    return false;
+                }
             }
             return true;
         }

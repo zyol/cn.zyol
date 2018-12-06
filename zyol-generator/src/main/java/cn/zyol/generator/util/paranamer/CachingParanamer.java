@@ -64,10 +64,12 @@ public class CachingParanamer implements Paranamer {
         this.delegate = delegate;
     }
 
+    @Override
     public String[] lookupParameterNames(AccessibleObject methodOrConstructor) {
         return lookupParameterNames(methodOrConstructor, true);
     }
 
+    @Override
     public String[] lookupParameterNames(AccessibleObject methodOrCtor, boolean throwExceptionIfMissing) {
         if(methodCache.containsKey(methodOrCtor)) {
             return methodCache.get(methodOrCtor);
