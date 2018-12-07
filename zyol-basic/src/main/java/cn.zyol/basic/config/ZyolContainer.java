@@ -3,10 +3,12 @@ package cn.zyol.basic.config;
 import cn.zyol.basic.client.ClientFilter;
 import cn.zyol.basic.client.ParamFilter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -48,7 +50,13 @@ public class ZyolContainer extends ParamFilter implements Filter {
         } else if (StringUtils.isEmpty(ssoServerUrl)) {
             throw new IllegalArgumentException("ssoServerUrl不能为空");
         }
-//        authenticationRpcService = (AuthenticationRpcService) ApplicationContextHelper.getBean("authenticationRpcService");
+        ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext());
+//        ApplicationContext ac = ContextLoader.getCurrentWebApplicationContext();
+//        authenticationRpcService = ac.getBean(AuthenticationRpcService.class);
+//        ApplicationContext context = ServiceBean.getSpringContext();
+//        authenticationRpcService = context.getBean(AuthenticationRpcService.class);
+//        authenticationRpcService =   DubboFactory.getDubboService(AuthenticationRpcService.class);
+//        authenticationRpcService = app.getBean(AuthenticationRpcService.class);
 //        if (authenticationRpcService == null) {
 //            throw new IllegalArgumentException("authenticationRpcService初始化失败");
 //        }
@@ -57,7 +65,8 @@ public class ZyolContainer extends ParamFilter implements Filter {
         }
 
         for (String name : filterNames) {
-            ClientFilter clientFilter = (ClientFilter) ApplicationContextHelper.getBean(name);
+            ClientFilter clientFilter = (ClientFilter) app.getBean(name);
+//            ClientFilter clientFilter = (ClientFilter)ApplicationContextHelper.getBean(name) ;
             if (clientFilter == null) {
                 continue;
             }

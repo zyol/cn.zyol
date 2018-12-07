@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FilterBean {
+
     @Bean(name = "ssoFilter")
     public SsoFilter generateSsoFilter() {
         return new SsoFilter();

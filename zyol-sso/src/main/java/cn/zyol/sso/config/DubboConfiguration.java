@@ -20,8 +20,8 @@ public class DubboConfiguration {
     @Value("${dubbo.application.name}")
     private String applicationName;
 
-    @Value("${spring.redis.host}")
-    private String logger;
+//    @Value("${spring.redis.host}")
+//    private String logger;
 
     @Value("${dubbo.registr.protocol}")
     private String protocol;
@@ -128,13 +128,13 @@ public class DubboConfiguration {
         this.applicationName = applicationName;
     }
 
-    public String getLogger() {
-        return logger;
-    }
-
-    public void setLogger(String logger) {
-        this.logger = logger;
-    }
+//    public String getLogger() {
+//        return logger;
+//    }
+//
+//    public void setLogger(String logger) {
+//        this.logger = logger;
+//    }
 
     public String getProtocol() {
         return protocol;

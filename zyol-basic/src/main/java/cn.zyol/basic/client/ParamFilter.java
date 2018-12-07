@@ -1,5 +1,6 @@
 package cn.zyol.basic.client;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import service.AuthenticationRpcService;
 
 /**
@@ -16,6 +17,7 @@ public class ParamFilter {
     /**
      * 单点登录服务端提供的RPC服务
      */
+    @Reference()
     protected AuthenticationRpcService authenticationRpcService;
 
     public void setSsoServerUrl(String ssoServerUrl) {

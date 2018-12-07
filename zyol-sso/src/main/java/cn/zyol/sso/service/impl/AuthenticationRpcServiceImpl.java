@@ -3,12 +3,14 @@ package cn.zyol.sso.service.impl;
 import bean.RpcPermission;
 import bean.RpcUser;
 import com.alibaba.dubbo.config.annotation.Service;
+import constants.SsoDubboConstants;
 import service.AuthenticationRpcService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+//@Component("authenticationRpcService")
+@Service(group = SsoDubboConstants.SSO_DUBBO_GROUP, version = SsoDubboConstants.SSO_DUBBO_VERSION)
 public class AuthenticationRpcServiceImpl implements AuthenticationRpcService {
 
 
