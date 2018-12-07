@@ -1,4 +1,4 @@
-package cn.zyol.basic.client;
+package cn.zyol.sso.filter;
 
 import org.springframework.http.HttpStatus;
 
@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+
 
 /**
  * Filter基类

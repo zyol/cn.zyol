@@ -1,6 +1,4 @@
-package cn.zyol.basic.bean;
-
-import bean.RpcPermission;
+package cn.zyol.sso.bean;
 
 import java.io.Serializable;
 import java.util.List;

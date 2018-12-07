@@ -1,7 +1,7 @@
 package cn.zyol.sso.config;
 
-import cn.zyol.basic.client.LogoutFilter;
-import cn.zyol.basic.client.SsoFilter;
+import cn.zyol.sso.filter.LogoutFilter;
+import cn.zyol.sso.filter.SsoFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class FilterBean {
 
     @Bean(name = "ssoFilter")
-    public SsoFilter generateSsoFilter() {
+    public SsoFilter generatessoFilter() {
         return new SsoFilter();
     }
 

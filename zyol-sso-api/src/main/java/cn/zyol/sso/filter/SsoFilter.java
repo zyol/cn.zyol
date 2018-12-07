@@ -1,9 +1,10 @@
-package cn.zyol.basic.client;
+package cn.zyol.sso.filter;
 
-import bean.RpcUser;
-import cn.zyol.basic.bean.SessionUser;
-import cn.zyol.basic.constants.SsoResultCode;
-import cn.zyol.basic.util.SessionUtils;
+
+import cn.zyol.sso.bean.RpcUser;
+import cn.zyol.sso.bean.SessionUser;
+import cn.zyol.sso.constants.SsoResultCode;
+import cn.zyol.sso.utils.SessionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

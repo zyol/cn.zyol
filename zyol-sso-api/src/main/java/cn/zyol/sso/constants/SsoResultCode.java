@@ -1,4 +1,5 @@
-package cn.zyol.basic.constants;
+package cn.zyol.sso.constants;
+
 
 /**
  * 单点登录权限返回码

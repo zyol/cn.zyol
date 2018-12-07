@@ -60,6 +60,12 @@ public interface BaseService<T extends Serializable> {
      */
     int selectCount(T record);
 
+    /**
+     * 根据主键id获取数据
+     * @param id
+     * @return
+     */
+    T  selectByPrimaryKey(Object id);
 
     // IdsMapper
 

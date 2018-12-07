@@ -1,23 +1,27 @@
-package cn.zyol.basic.client;
+package cn.zyol.sso.filter;
 
+import cn.zyol.sso.constants.SsoDubboConstants;
+import cn.zyol.sso.service.AuthenticationRpcService;
 import com.alibaba.dubbo.config.annotation.Reference;
-import service.AuthenticationRpcService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * 参数注入Filter
- *
  */
+@PropertySource(value = "classpath:/sso.properties")
 public class ParamFilter {
 
     /**
      * 单点登录服务端URL
      */
+    @Value("sso.server.url")
     protected String ssoServerUrl;
 
     /**
      * 单点登录服务端提供的RPC服务
      */
-    @Reference()
+    @Reference(group = SsoDubboConstants.SSO_DUBBO_GROUP, version = SsoDubboConstants.SSO_DUBBO_VERSION)
     protected AuthenticationRpcService authenticationRpcService;
 
     public void setSsoServerUrl(String ssoServerUrl) {

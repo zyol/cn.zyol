@@ -15,6 +15,7 @@ public abstract class BaseServiceImpl<T extends Serializable> implements BaseSer
     public int insert(T record) {
         return mapper.insert(record);
     }
+
     @Override
     public int insertSelective(T record) {
         return mapper.insertSelective(record);
@@ -105,5 +106,9 @@ public abstract class BaseServiceImpl<T extends Serializable> implements BaseSer
         return mapper.deleteByIds(ids);
     }
 
+    @Override
+    public T selectByPrimaryKey(Object id) {
+        return mapper.selectByPrimaryKey(id);
+    }
 
 }

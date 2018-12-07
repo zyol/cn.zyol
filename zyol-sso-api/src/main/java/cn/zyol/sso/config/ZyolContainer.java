@@ -1,7 +1,8 @@
-package cn.zyol.basic.config;
+package cn.zyol.sso.config;
 
-import cn.zyol.basic.client.ClientFilter;
-import cn.zyol.basic.client.ParamFilter;
+
+import cn.zyol.sso.filter.ClientFilter;
+import cn.zyol.sso.filter.ParamFilter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -45,41 +46,23 @@ public class ZyolContainer extends ParamFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        if (isServer) {
-            ssoServerUrl = filterConfig.getServletContext().getContextPath();
-        } else if (StringUtils.isEmpty(ssoServerUrl)) {
-            throw new IllegalArgumentException("ssoServerUrl不能为空");
-        }
-        ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext());
-//        ApplicationContext ac = ContextLoader.getCurrentWebApplicationContext();
-//        authenticationRpcService = ac.getBean(AuthenticationRpcService.class);
-//        ApplicationContext context = ServiceBean.getSpringContext();
-//        authenticationRpcService = context.getBean(AuthenticationRpcService.class);
-//        authenticationRpcService =   DubboFactory.getDubboService(AuthenticationRpcService.class);
-//        authenticationRpcService = app.getBean(AuthenticationRpcService.class);
-//        if (authenticationRpcService == null) {
-//            throw new IllegalArgumentException("authenticationRpcService初始化失败");
-//        }
-        if (filterNames == null || filterNames.size() == 0) {
-            throw new IllegalArgumentException("filterNames不能为空");
-        }
-
-        for (String name : filterNames) {
-            ClientFilter clientFilter = (ClientFilter) app.getBean(name);
-//            ClientFilter clientFilter = (ClientFilter)ApplicationContextHelper.getBean(name) ;
-            if (clientFilter == null) {
-                continue;
+        if (filterNames != null && !filterNames.isEmpty()) {
+            for (String name : filterNames) {
+                ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext());
+                ClientFilter clientFilter = (ClientFilter) app.getBean(name);
+                if (clientFilter == null) {
+                    continue;
+                }
+                clientFilter.setSsoServerUrl(ssoServerUrl);
+                clientFilter.setAuthenticationRpcService(authenticationRpcService);
+                clientFilter.init(filterConfig);
+                filters.add(clientFilter);
             }
-            clientFilter.setSsoServerUrl(ssoServerUrl);
-            clientFilter.setAuthenticationRpcService(authenticationRpcService);
-            clientFilter.init(filterConfig);
-            filters.add(clientFilter);
         }
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         for (ClientFilter filter : filters) {

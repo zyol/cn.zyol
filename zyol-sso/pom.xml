@@ -14,13 +14,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- 基础项目支持 -->
-        <dependency>
-            <groupId>cn.zyol</groupId>
-            <artifactId>zyol-basic</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>cn.zyol</groupId>
             <artifactId>zyol-sso-api</artifactId>

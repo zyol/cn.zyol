@@ -1,4 +1,4 @@
-package bean;
+package cn.zyol.sso.bean;
 
 import java.io.Serializable;
 
