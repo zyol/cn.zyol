@@ -45,6 +45,7 @@
     <!--<logger name="java.sql.Statement" level="DEBUG" />-->
     <!--<logger name="java.sql.PreparedStatement" level="DEBUG" />-->
     <logger level="debug" name="cn.zyol"/>
+    <!-- debug 的时候 可以看400 参数错误 -->
     <logger level="info" name="org.springframework"/>
     <logger level="info" name="org.apache.cxf"/>
     <logger level="debug" name="java.sql"/>
