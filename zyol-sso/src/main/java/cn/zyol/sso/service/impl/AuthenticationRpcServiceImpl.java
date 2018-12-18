@@ -10,7 +10,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service(group = SsoDubboConstants.SSO_DUBBO_GROUP, version = SsoDubboConstants.SSO_DUBBO_VERSION)
+@Service(group = SsoDubboConstants.SSO_DUBBO_GROUP, version = SsoDubboConstants.SSO_DUBBO_VERSION,interfaceClass=AuthenticationRpcService.class)
 public class AuthenticationRpcServiceImpl implements AuthenticationRpcService {
 
 

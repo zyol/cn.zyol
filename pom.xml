@@ -33,12 +33,24 @@
         <org.apache.zookeeper.version>3.4.9</org.apache.zookeeper.version>
     </properties>
     <dependencies>
-
-        <!-- Spring Boot Dubbo 依赖 -->
+        <!--spring-boot-dubbo依赖  dubbo事务开启-->
         <dependency>
             <groupId>io.dubbo.springboot</groupId>
             <artifactId>spring-boot-starter-dubbo</artifactId>
-            <version>${dubbo-spring-boot}</version>
+            <version>1.0.0</version>
+            <exclusions>
+                <!--去除com.alibaba依赖-->
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>dubbo</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--添加2.6.2的dubbo依赖-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.6.2</version>
         </dependency>
         <!-- Spring Boot Web 依赖 -->
         <dependency>

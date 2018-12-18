@@ -1,6 +1,5 @@
 package cn.zyol.sso.service.impl;
 
-import cn.zyol.basic.exception.ServiceException;
 import cn.zyol.basic.service.impl.BaseServiceImpl;
 import cn.zyol.sso.bean.SysUser;
 import cn.zyol.sso.dao.SysUserMapper;
@@ -26,6 +25,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
             sysUserMapper.insert(sysUser);
         }
         sysUserMapper.deleteByIds("1,2,3,4,5");
-        throw new ServiceException("1223");
+       int i= 1/0;
     }
 }

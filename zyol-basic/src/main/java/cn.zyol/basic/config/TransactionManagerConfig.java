@@ -28,19 +28,11 @@ public class TransactionManagerConfig {
     private static final int TX_METHOD_TIMEOUT = 5;
     /*定义切点变量：拦截test.spring包下所有类的所有方法,返回值类型任意的方法*/
 
-    private static final String AOP_POINTCUT_EXPRESSION = "execution (* cn.zyol.sso.service..*(..))";
-
+    private static final String AOP_POINTCUT_EXPRESSION = "execution(public * cn.zyol.sso.service.*.*(..))";
     @Autowired
     private PlatformTransactionManager transactionManager;
-
-    /**
-     * @author yc
-     * @data 2018年7月28日
-     * @description springBoot事务配置
-     */
-
     @Bean
-    public TransactionInterceptor TxAdvice() {
+    public TransactionInterceptor txAdvice() {
         /*事务管理规则，声明具备事务管理的方法名*/
         NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
         /*只读事物、不做更新删除等*/
@@ -51,7 +43,6 @@ public class TransactionManagerConfig {
         /* transactiondefinition 定义事务的隔离级别；
          * PROPAGATION_NOT_SUPPORTED事务传播级别5，以非事务运行，如果当前存在事务，则把当前事务挂起*/
         readOnlyRule.setPropagationBehavior(TransactionDefinition.PROPAGATION_NOT_SUPPORTED);
-
         RuleBasedTransactionAttribute requireRule = new RuleBasedTransactionAttribute();
         /*抛出异常后执行切点回滚*/
         requireRule.setRollbackRules(Collections.singletonList(new RollbackRuleAttribute(Exception.class)));
@@ -60,28 +51,19 @@ public class TransactionManagerConfig {
         /*设置事务失效时间，如果超过5秒，则回滚事务*/
         requireRule.setTimeout(TX_METHOD_TIMEOUT);
         Map<String, TransactionAttribute> txMap = new HashMap<>();
-
         txMap.put("add*", requireRule);
         txMap.put("save*", requireRule);
         txMap.put("insert*", requireRule);
         txMap.put("update*", requireRule);
         txMap.put("delete*", requireRule);
         txMap.put("remove*", requireRule);
-
         txMap.put("get*", readOnlyRule);
         txMap.put("query*", readOnlyRule);
         txMap.put("find*", readOnlyRule);
         txMap.put("select*", readOnlyRule);
         source.setNameMap(txMap);
-        TransactionInterceptor txAdvice = new TransactionInterceptor(transactionManager, source);
-        return txAdvice;
+        return new TransactionInterceptor(transactionManager, source);
     }
-
-    /**
-     * @author yc
-     * @data 2018年7月27日
-     * @description 利用AspectJExpressionPointcut设置切面=切点+通知（写成内部bean的方式）
-     */
     @Bean
     public Advisor txAdviceAdvisor() {
         /* 声明切点的面
@@ -91,7 +73,6 @@ public class TransactionManagerConfig {
         /*声明和设置需要拦截的方法,用切点语言描写*/
         pointcut.setExpression(AOP_POINTCUT_EXPRESSION);
         /*设置切面=切点pointcut+通知TxAdvice*/
-        return new DefaultPointcutAdvisor(pointcut, TxAdvice());
+        return new DefaultPointcutAdvisor(pointcut, txAdvice());
     }
 }
- 
