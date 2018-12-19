@@ -14,13 +14,14 @@ public class SysUserController {
 
     @Autowired
     private SysUserService sysUserService;
+
     @Reference(group = SsoDubboConstants.SSO_DUBBO_GROUP, version = SsoDubboConstants.SSO_DUBBO_VERSION)
     private AuthenticationRpcService authenticationRpcService;
 
     @RequestMapping("/report/shutdownreportlist")
     public String save() {
-        sysUserService.in();
-       return null;
+        authenticationRpcService.findAuthInfo("123");
+        return null;
     }
 
 
