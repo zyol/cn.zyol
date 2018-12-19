@@ -1,4 +1,4 @@
-//package cn.zyol.sso.web;
+package cn.zyol.sso.web;//package cn.zyol.sso.cn.zyol.sso.web;
 //
 //import cn.zyol.basic.util.CookieUtils;
 //import cn.zyol.basic.util.StringUtil;
@@ -11,9 +11,9 @@
 //import cn.zyol.sso.utils.CaptchaHelper;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestMethod;
+//import org.springframework.cn.zyol.sso.web.bind.annotation.RequestBody;
+//import org.springframework.cn.zyol.sso.web.bind.annotation.RequestMapping;
+//import org.springframework.cn.zyol.sso.web.bind.annotation.RequestMethod;
 //
 //import javax.servlet.http.Cookie;
 //import javax.servlet.http.HttpServletRequest;

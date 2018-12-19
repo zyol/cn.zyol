@@ -5,5 +5,5 @@ import cn.zyol.sso.bean.SysUser;
 
 public interface SysUserService extends BaseService<SysUser> {
 
-    void in();
+    void save();
 }

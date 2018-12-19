@@ -14,7 +14,7 @@
     <!-- js 和 freemarker 包名称  -->
     <!--<entry key="targetpackage">demo</entry>-->
 
-    <!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
+    <!-- jsp namespace: cn.zyol.sso.web/${namespace}/${className}/list.jsp -->
     <entry key="namespace">ftl</entry>
 
     <!-- 输出的代码路径 -->
