@@ -5,6 +5,7 @@ import cn.zyol.sso.filter.ClientFilter;
 import cn.zyol.sso.filter.ParamFilter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -21,14 +22,9 @@ import java.util.List;
 
 @Component
 @WebFilter(urlPatterns = "/*")
-@ConfigurationProperties(prefix = "zyolFilter")
-//@PropertySource("classpath:ES/elasticsearch.properties")
+@ConfigurationProperties(prefix = "zyol.filter")
+@PropertySource(value = "classpath:/sso.properties")
 public class ZyolContainer extends ParamFilter implements Filter {
-    /**
-     * 是否服务端，默认为false
-     */
-    private boolean isServer;
-
     private List<String> filterNames = new LinkedList<>();
 
     private List<ClientFilter> filters = new LinkedList<>();
@@ -47,6 +43,7 @@ public class ZyolContainer extends ParamFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         if (filterNames != null && !filterNames.isEmpty()) {
+//            authenticationRpcService = DubboFactory.getDubboService(AuthenticationRpcService.class, "zookeeper://127.0.0.1:2181", SsoDubboConstants.SSO_DUBBO_APPLICATION_NAME, SsoDubboConstants.SSO_DUBBO_VERSION);
             for (String name : filterNames) {
                 ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext());
                 ClientFilter clientFilter = (ClientFilter) app.getBean(name);
@@ -54,7 +51,6 @@ public class ZyolContainer extends ParamFilter implements Filter {
                     continue;
                 }
                 clientFilter.setSsoServerUrl(ssoServerUrl);
-                clientFilter.setAuthenticationRpcService(authenticationRpcService);
                 clientFilter.init(filterConfig);
                 filters.add(clientFilter);
             }

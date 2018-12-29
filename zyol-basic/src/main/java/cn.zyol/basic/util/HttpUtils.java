@@ -17,7 +17,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.SocketTimeoutException;
@@ -34,8 +35,8 @@ import java.util.Map;
  */
 public class HttpUtils {
 
-    private static Logger logger     = Logger.getLogger(HttpUtils.class);
-    private final static Logger _httpLog = Logger.getLogger("httpLog");
+    private static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
+    private final static Logger _httpLog = LoggerFactory.getLogger("httpLog");
     
     /**
      * 连接超时时间

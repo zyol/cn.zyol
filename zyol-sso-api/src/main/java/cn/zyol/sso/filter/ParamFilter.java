@@ -33,6 +33,11 @@ public class ParamFilter {
     }
 
     public AuthenticationRpcService getAuthenticationRpcService() {
+
+//        if(authenticationRpcService == null){
+//            authenticationRpcService = DubboFactory.getDubboService(AuthenticationRpcService.class, "zookeeper://121.0.0.1:12181", SsoDubboConstants.SSO_DUBBO_APPLICATION_NAME, SsoDubboConstants.SSO_DUBBO_VERSION);
+//        }
+
         return authenticationRpcService;
     }
 }
